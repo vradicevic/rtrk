@@ -6,17 +6,18 @@ videopath = "D:\\auticClosing.mp4"
 imagespath = "D:\\auticClosing"
 
 
-fc.getFrames(videopath,0,500,imagespath,name="autic")
+#fc.getFrames(videopath,0,500,imagespath,name="autic")
 
 
 
+filePath = imagespath+ "\\auticALL.yuv"
+f= io.BytesIO()
+file = open(filePath,'wb')
 
-for num in range(1,500,1):
+for num in range(1,15,1):
     frame = cv2.imread(imagespath+"\\autic"+str(num)+".png") 
-    filePath = imagespath+ "\\autic" +str(num)+".yuv"
     yuv = cv2.cvtColor(frame,cv2.COLOR_BGR2YUV)
-    f= io.BytesIO()
     f.write(yuv.tobytes())
-    with open(filePath,'wb') as file:
-        file.write(f.getbuffer())
+    
+file.write(f.getbuffer())
     
