@@ -3,9 +3,9 @@ from cv2 import cv2
 import io
 
 videopath = "D:\\Videosekvence\\mirna_right720.mp4"
-savepath = "D:\\Videosekvence\\YUV\\mirna_rightYUV444.yuv"
+savepath = "D:\\Videosekvence\\YUV\\test.yuv"
 video = cv2.VideoCapture(videopath)
-file = open(savepath,'ab')
+file = open(savepath,'wb')
 
 ok = True
 f= io.BytesIO()
