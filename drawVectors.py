@@ -27,16 +27,16 @@ for i in range(0,len(buffer),6):
     # ::length- [4] 1 integer udaljenosti from i to točke
     # ::angle- [5] 1 integer kut vektora
 vectorsFile.close()
-pathImage = "H:\\frame1.png"
+pathImage = "F:\\Videosekvence\\odabrani_moving_dashboardYUYV.yuv"
 #saveImagePath = "D:\\results\\auticClosingAllBlocks\\carawayblackBlock32Step35TSS.png"
+print(len(buffer)/6)
 
+file = open(pathImage,'rb')
 
-# file = open(pathImage,'rb')
+yuv = np.frombuffer(file.read(width*height*2), dtype=np.uint8).reshape(height,width,2)
+file.close()
+png = cv2.cvtColor(yuv,cv2.COLOR_YUV2BGR_YUYV)
 
-# yuv = np.frombuffer(file.read(width*height*3), dtype=np.uint8).reshape(height,width,3)
-# file.close()
-# png = cv2.cvtColor(yuv,cv2.COLOR_YUV2BGR)
-png = cv2.imread(pathImage)
 
 
  
@@ -47,9 +47,10 @@ for bcount in range(0, numOfVs, 1):
             
             pointFrom = vectors[bcount][0:2]
             pointTo = vectors[bcount][2:4]
-            print("Length: "+ str(vectors[bcount][5]))
-            cv2.arrowedLine(png,(pointFrom[0],pointFrom[1]), (pointTo[0],pointTo[1]),(0,255,0), 1)
+            print("Angle: "+ str(vectors[bcount][5]))
+            cv2.arrowedLine(png,(pointFrom[0],pointFrom[1]), (pointTo[0],pointTo[1]),(0,255,255), 2)
 
 cv2.imshow("Framnjo",png)
 
 cv2.waitKey()
+
