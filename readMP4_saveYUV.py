@@ -2,8 +2,8 @@ import framecollect as fc
 from cv2 import cv2
 import io
 
-videopath = "F:\\Videosekvence\\moving_dashboard720.mp4"
-savepath = "F:\\Videosekvence\\moving_dashboardYUV444.yuv"
+videopath = "C:\\Videosekvence\\moving_dashboard720.mp4"
+savepath = "C:\\Videosekvence\\moving_dashboardYUV444.yuv"
 
 
 file = open(savepath,'ab')
