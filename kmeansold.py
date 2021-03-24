@@ -127,3 +127,11 @@ def FindClusters(means,items):
         clusters[index].append(item)
   
     return clusters
+
+def GetBelongsTo(means,items):
+    belongsTo = [0 for i in range(len(items))]
+    for i in range(0,len(items),1):
+        index = Classify(means,items[i])
+        belongsTo[i] = index
+    
+    return belongsTo
