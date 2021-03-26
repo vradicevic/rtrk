@@ -6,16 +6,18 @@ import new_tss
 from paths import *
 
 width,height = 1280,720
-
-
+step = 15
+offset= 10
+frame= 3
 blockSize = 32
-
-
+steps=[15,25,35,45,55,65,75,85,95]
+boje=[(255,0,0),(0,255,0),(0,0,255),(255,255,255),(255,255,0),(255,0,255)]
 vectorsFile = open(vectorsPath,"r+")
 buffer = np.fromfile(vectorsFile,dtype=np.int16)
 vectors = []
 numOfVs = int(len(buffer)/6)
-
+print(numOfVs)
+print("a iz lena")
 
 for i in range(0,len(buffer),6):
     vectors.append((buffer[i:i+6])) 
@@ -26,7 +28,8 @@ for i in range(0,len(buffer),6):
     # ::angle- [5] 1 integer kut vektora
 vectorsFile.close()
 
-
+belongsToFile= open(belongsToPath,"rb")
+belongsTo = np.fromfile(belongsToFile,dtype=np.uint8)
 
 videoPath = videoMovingDashboard30FPS
 
@@ -43,15 +46,12 @@ png = cv2.cvtColor(yuv,cv2.COLOR_YUV2BGR_YUYV)
  
 numofVectors = 0
 for bcount in range(0, numOfVs, 1):
-    if vectors[bcount][4]>2:
-        numofVectors+=1
-        pointFrom = vectors[bcount][0:2]
-        pointTo = vectors[bcount][2:4]
-        print("Angle: "+ str(vectors[bcount][5]))
-        cv2.arrowedLine(png,(pointFrom[0],pointFrom[1]), (pointTo[0],pointTo[1]),(0,0,255), 1)
-print(numofVectors)
+    pointFrom = vectors[bcount][0:2]
+    pointTo = vectors[bcount][2:4]
+    print("Angle: "+ str(vectors[bcount][5]))
+    cv2.arrowedLine(png,(pointFrom[0],pointFrom[1]), (pointTo[0],pointTo[1]),boje[belongsTo[bcount]], 1)
+
 cv2.imshow("Framnjo",png)
 
-#cv2.imwrite("F:\\Slike\\hibridtestMoving.png",png)
 cv2.waitKey()
 
