@@ -48,10 +48,11 @@ numofVectors = 0
 for bcount in range(0, numOfVs, 1):
     pointFrom = vectors[bcount][0:2]
     pointTo = vectors[bcount][2:4]
-    print("Angle: "+ str(vectors[bcount][5]))
+    print("Length: "+ str(vectors[bcount][4]))
     cv2.arrowedLine(png,(pointFrom[0],pointFrom[1]), (pointTo[0],pointTo[1]),boje[belongsTo[bcount]], 1)
 
 cv2.imshow("Framnjo",png)
 
 cv2.waitKey()
+cv2.imwrite("D:\\Videosekvence\\slike\\samopokutuMirna.png",png)
 
