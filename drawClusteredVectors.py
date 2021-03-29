@@ -17,7 +17,7 @@ buffer = np.fromfile(vectorsFile,dtype=np.int16)
 vectors = []
 numOfVs = int(len(buffer)/6)
 print(numOfVs)
-print("a iz lena")
+
 
 for i in range(0,len(buffer),6):
     vectors.append((buffer[i:i+6])) 
@@ -31,10 +31,10 @@ vectorsFile.close()
 belongsToFile= open(belongsToPath,"rb")
 belongsTo = np.fromfile(belongsToFile,dtype=np.uint8)
 
-videoPath = videoMovingDashboard30FPS
+videoPath = videoMirnaCenter30FPS
 
-print(len(buffer)/6)
-framenum = 44
+
+framenum = 13
 file = open(videoPath,'rb')
 file.seek(framenum*width*height*2)
 yuv = np.frombuffer(file.read(width*height*2), dtype=np.uint8).reshape(height,width,2)
