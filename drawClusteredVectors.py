@@ -11,7 +11,7 @@ offset= 10
 frame= 3
 blockSize = 32
 steps=[15,25,35,45,55,65,75,85,95]
-boje=[(255,0,0),(0,255,0),(0,0,255),(255,255,255),(255,255,0),(255,0,255)]
+boje=[(255,0,0),(0,255,0),(0,0,255),(255,255,255),(255,255,0),(255,0,255),(128,128,128),(0,0,0),(128,0,55),(0,128,55)]
 vectorsFile = open(vectorsPath,"r+")
 buffer = np.fromfile(vectorsFile,dtype=np.int16)
 vectors = []
@@ -31,10 +31,10 @@ vectorsFile.close()
 belongsToFile= open(belongsToPath,"rb")
 belongsTo = np.fromfile(belongsToFile,dtype=np.uint8)
 
-videoPath = videoMirnaCenter30FPS
+videoPath = videoMovingDashboard30FPS
 
 
-framenum = 13
+framenum = 45
 file = open(videoPath,'rb')
 file.seek(framenum*width*height*2)
 yuv = np.frombuffer(file.read(width*height*2), dtype=np.uint8).reshape(height,width,2)
@@ -54,5 +54,5 @@ for bcount in range(0, numOfVs, 1):
 cv2.imshow("Framnjo",png)
 
 cv2.waitKey()
-cv2.imwrite("D:\\Videosekvence\\slike\\samopokutuMirna.png",png)
+#cv2.imwrite("D:\\Videosekvence\\slike\\samopokutuMirna.png",png)
 

@@ -28,10 +28,10 @@ vectorsFile.close()
 
 
 
-videoPath = videoMirnaCenter30FPS
+videoPath = videoMovingDashboard30FPS
 
 print(len(buffer)/6)
-framenum = 13
+framenum = 45
 file = open(videoPath,'rb')
 file.seek(framenum*width*height*2)
 yuv = np.frombuffer(file.read(width*height*2), dtype=np.uint8).reshape(height,width,2)
