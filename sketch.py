@@ -24,7 +24,7 @@ def get_gradient_3d(width, height, start_list, stop_list, is_horizontal_list):
     return result
 
 WIDTH,HEIGHT = 1280,720
-folderPath = "C:\\Videosekvence\\Dummy sekvence"
+folderPath = "D:\\Videosekvence\\Dummy sekvence"
 offsets=[15,25,35,45]
 
 shapeSize = (128,72)
@@ -32,6 +32,10 @@ array = get_gradient_3d(16, 9, (0, 0, 192), (255, 255, 64), (True, False, False)
 movingObject = np.uint8(array)
 movingObject = cv2.resize(movingObject,shapeSize,interpolation=cv2.INTER_CUBIC)
 acx,acy = 640,360
+newFrame = cv2.imread("D:\\Videosekvence\\slike\\background.png")
+newFrame = cv2.resize(newFrame,(1280,720),interpolation=cv2.INTER_CUBIC)
+newerFrame= np.ones((1280,720,3),dtype=np.uint8)
+newerFrame= copy.copy(newFrame)
 for step in offsets:
     p1 = (acx, acy)
     p2 = (acx+step, acy)
@@ -45,13 +49,13 @@ for step in offsets:
     pointList = [p1,p2,p3,p4,p5,p6,p7,p8,p9]
 
     for p in range(len(pointList)):
+        newerFrame= copy.copy(newFrame)
         
-        newFrame = np.ones((HEIGHT,WIDTH,3),dtype=np.uint8)
-        newFrame[pointList[p][1]:(pointList[p][1]+72),pointList[p][0]:(pointList[p][0]+128)] = movingObject
-        cv2.imshow("Shape",newFrame)
+        newerFrame[pointList[p][1]:(pointList[p][1]+72),pointList[p][0]:(pointList[p][0]+128)] = movingObject
+        cv2.imshow("Shape",newerFrame)
         cv2.waitKey()
         filePath = folderPath+ "\\Offset" +str(step)+"Frame" + str(p) + ".yuv"
-        yuv = cv2.cvtColor(newFrame,cv2.COLOR_BGR2YUV)
+        yuv = cv2.cvtColor(newerFrame,cv2.COLOR_BGR2YUV)
         f= io.BytesIO()
         f.write(yuv.tobytes())
         with open(filePath,'wb') as file:
