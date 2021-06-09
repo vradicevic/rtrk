@@ -30,8 +30,8 @@ vectorsFile.close()
 belongsToFile= open(belongsToPath,"rb")
 belongsTo = np.fromfile(belongsToFile,dtype=np.uint8)
 
-videoPath = videoMovingDashboard30FPS
-framenum = 65
+videoPath = videoMirnaCenter30FPS
+framenum = 13
 
 
 file = open(videoPath,'rb')
