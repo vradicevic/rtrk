@@ -7,7 +7,7 @@ from xlwt import Workbook
 from math import sqrt,pow,atan2
 offsets = [15,25,35,45]
 width,height = 1280,720
-imgPath = "D:\\Videosekvence\\Dummy sekvence\\Offset15Frame0.yuv"
+imgPath = "F:\\Videosekvence\\Dummy sekvence\\Offset15Frame0.yuv"
 file = open(imgPath,'rb')
 yuv = np.frombuffer(file.read(width*height*3), dtype=np.uint8).reshape(height,width,3)
 png = cv2.cvtColor(yuv,cv2.COLOR_YUV2RGB)
@@ -15,7 +15,7 @@ file.close()
 for offset in offsets:
     for frame in range(1,9,1):
         png = cv2.cvtColor(yuv,cv2.COLOR_YUV2RGB)
-        vectorsPath = "D:\\vektori\\evaluation_dummy\\vectorsOffset"+str(offset)+"Frame"+str(frame)+".bin"
+        vectorsPath = "H:\\vektori\\evaluation_dummy\\myBMA\\vectorsOffset"+str(offset)+"Frame"+str(frame)+".bin"
         
         vectorsFile = open(vectorsPath,"r+")
         buffer = np.fromfile(vectorsFile,dtype=np.int16)
