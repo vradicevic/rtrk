@@ -24,15 +24,15 @@ def get_gradient_3d(width, height, start_list, stop_list, is_horizontal_list):
     return result
 
 WIDTH,HEIGHT = 1280,720
-folderPath = "D:\\Videosekvence\\Dummy sekvence"
+folderPath = "F:\\Videosekvence\\Dummy sekvence"
 offsets=[15,25,35,45]
 
-shapeSize = (128,72)
+shapeSize = (512,288)
 array = get_gradient_3d(16, 9, (0, 0, 192), (255, 255, 64), (True, False, False))
 movingObject = np.uint8(array)
 movingObject = cv2.resize(movingObject,shapeSize,interpolation=cv2.INTER_CUBIC)
 acx,acy = 640,360
-newFrame = cv2.imread("D:\\Videosekvence\\slike\\background.png")
+newFrame = cv2.imread("F:\\Videosekvence\\slike\\background.png")
 newFrame = cv2.resize(newFrame,(1280,720),interpolation=cv2.INTER_CUBIC)
 newerFrame= np.ones((1280,720,3),dtype=np.uint8)
 newerFrame= copy.copy(newFrame)
@@ -47,18 +47,23 @@ for step in offsets:
     p8 = (acx+step, acy-step)
     p9 = (acx-step, acy+step)
     pointList = [p1,p2,p3,p4,p5,p6,p7,p8,p9]
+    filePath = folderPath+"\\ShapeSize"+str(shapeSize[0])+"_"+str(shapeSize[1])+"Offset" + str(step) + ".yuv"
+    for p in range(1,len(pointList),1):
 
-    for p in range(len(pointList)):
         newerFrame= copy.copy(newFrame)
-        
-        newerFrame[pointList[p][1]:(pointList[p][1]+72),pointList[p][0]:(pointList[p][0]+128)] = movingObject
-        cv2.imshow("Shape",newerFrame)
-        cv2.waitKey()
-        filePath = folderPath+ "\\Offset" +str(step)+"Frame" + str(p) + ".yuv"
+        newerFrame[pointList[0][1]:(pointList[0][1]+shapeSize[1]),pointList[0][0]:(pointList[0][0]+shapeSize[0])] = movingObject
         yuv = cv2.cvtColor(newerFrame,cv2.COLOR_BGR2YUV)
         f= io.BytesIO()
         f.write(yuv.tobytes())
-        with open(filePath,'wb') as file:
+        with open(filePath,'ab') as file:
+            file.write(f.getbuffer())
+
+        newerFrame= copy.copy(newFrame)
+        newerFrame[pointList[p][1]:(pointList[p][1]+shapeSize[1]),pointList[p][0]:(pointList[p][0]+shapeSize[0])] = movingObject
+        yuv = cv2.cvtColor(newerFrame,cv2.COLOR_BGR2YUV)
+        f= io.BytesIO()
+        f.write(yuv.tobytes())
+        with open(filePath,'ab') as file:
             file.write(f.getbuffer())
 
 
