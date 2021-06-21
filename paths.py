@@ -1,4 +1,4 @@
-videoMovingDashboard30FPS = "D:\\Videosekvence\\yuv\\odabrani_moving_dashboardYUYVFPS30.yuv";
+videoMovingDashboard30FPS = "D:\\VISION_SDK_02_12_01_00\\vision_sdk\\tools\\network_tools\\bin\Videosekvence\\odabrani_movingDashboard.yuv";
 videoMovingDashboard60FPS = "D:\\Videosekvence\\yuv\\odabrani_moving_dashboardYUYVFPS60.yuv";
 
 videoMirnaLeft30FPS = "D:\\Videosekvence\\yuv\\odabrani_mirna_leftYUYVFPS30.yuv";
