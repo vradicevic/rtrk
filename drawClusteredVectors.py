@@ -31,7 +31,7 @@ belongsToFile= open(belongsToPath,"rb")
 belongsTo = np.fromfile(belongsToFile,dtype=np.uint8)
 
 videoPath = videoMovingDashboard30FPS
-framenum = 69
+framenum = 23
 
 
 file = open(videoPath,'rb')
@@ -49,7 +49,7 @@ for bcount in range(0, numOfVs, 1):
     pointTo = vectors[bcount][2:4]
     print("Length: "+ str(vectors[bcount][4]))
     cv2.arrowedLine(png,(pointFrom[0],pointFrom[1]), (pointTo[0],pointTo[1]),boje[belongsTo[bcount]], 2)
-    #cv2.putText(png,str(vectors[bcount][5]),(pointFrom[0],pointFrom[1]),fontFace=cv2.FONT_HERSHEY_SIMPLEX,fontScale=0.5,thickness=1,color=boje[belongsTo[bcount]])
+    cv2.putText(png,str(vectors[bcount][5]),(pointFrom[0],pointFrom[1]),fontFace=cv2.FONT_HERSHEY_SIMPLEX,fontScale=0.5,thickness=1,color=boje[belongsTo[bcount]])
 
 cv2.imshow("Framnjo",png)
 
