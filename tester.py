@@ -1,31 +1,18 @@
-import cv2
 import numpy as np
 
-# Load sample image
-img_bgr = cv2.imread("H:\\frame1.png")
+vectorsFile = open("C:\\Dummy evaluacija\\1280x720\\Vektori\\EBMA_128x72_Up_Step=15.bin","r+")
+buffer = np.fromfile(vectorsFile,dtype=np.int16)
+vectors = []
+numOfVs = int(len(buffer)/6)
 
 
-# Convert from BGR to YUV
-img_yuv = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2YUV)
-
-# Converting directly back from YUV to BGR results in an (almost) identical image
-img_bgr_restored = cv2.cvtColor(img_yuv, cv2.COLOR_YUV2BGR)
-
-diff = img_bgr.astype(np.int16) - img_bgr_restored
-print("mean/stddev diff (BGR => YUV => BGR)", np.mean(diff), np.std(diff))
-
-# Create YUYV from YUV
-y0 = np.expand_dims(img_yuv[...,0][::,::2], axis=2)
-u = np.expand_dims(img_yuv[...,1][::,::2], axis=2)
-y1 = np.expand_dims(img_yuv[...,0][::,1::2], axis=2)
-v = np.expand_dims(img_yuv[...,2][::,::2], axis=2)
-img_yuyv = np.concatenate((y0, u, y1, v), axis=2)
-img_yuyv_cvt = img_yuyv.reshape(img_yuyv.shape[0], img_yuyv.shape[1] * 2, int(img_yuyv.shape[2] / 2))
-print(img_yuyv.shape[1])
-# Convert back to BGR results in more saturated image.
-img_bgr_restored = cv2.cvtColor(img_yuyv_cvt, cv2.COLOR_YUV2BGR_YUYV)
-cv2.imshow("converted", img_bgr_restored)
-cv2.waitKey(0)
-
-diff = img_bgr.astype(np.int16) - img_bgr_restored
-print("mean/stddev diff (BGR => YUV => YUYV => BGR)", np.mean(diff), np.std(diff))
+for i in range(0,len(buffer),6):
+    vectors.append((buffer[i:i+6])) 
+    #svaki vektor je složen od 5 integera na sljedeći način u bin-u
+    # ::from-[0]=x i [1]=y   2 integera jedan x drugi y 
+    # ::to- [2]=x i  [3]=y  2 integera jedan x drugi y 
+    # ::length- [4] 1 integer udaljenosti from i to točke
+    # ::angle- [5] 1 integer kut vektora
+vectorsFile.close()
+for i in range(0,numOfVs,1):
+    print(vectors[i][5])

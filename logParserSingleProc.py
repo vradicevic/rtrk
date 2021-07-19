@@ -36,9 +36,9 @@ def parseKMEAN(words,id):
 
 
 def parse (log, broj_pon):
-    logBMAHOST = [] #list for storing execution time
+    #logBMAHOST = [] #list for storing execution time
     logBMADSP1 = []
-    logBMADSP2 = []
+    #logBMADSP2 = []
     logKMEAN = []
     logPREP = []
    
@@ -47,15 +47,14 @@ def parse (log, broj_pon):
         for i, word in enumerate(words):
             
                 if word == '[HOST':
-                    if words[i+2][0:3]=="BMA":
-                        log = parseBMA(words,i+2)
-                        logBMAHOST.append(log)
+                    
                     if words[i+2][0:5]=="KMEAN":
                         log = parseKMEAN(words,i+2)
                         logKMEAN.append(log)
                     
 
-                if word == '[EVE1':
+                
+                if word == '[HOST':
                     if words[i+2][0:4]=="PREP":
                         log = parsePREP(words,i+2)
                         logPREP.append(log)
@@ -64,23 +63,20 @@ def parse (log, broj_pon):
                     if words[i+2][0:3]=="BMA":
                         log = parseBMA(words,i+2)
                         logBMADSP1.append(log)
-                if word == '[DSP2':
-                    if words[i+2][0:3]=="BMA":
-                        log = parseBMA(words,i+2)
-                        logBMADSP2.append(log)
+                
 
-    print(logBMAHOST)
-    return logBMAHOST,logBMADSP1,logBMADSP2,logKMEAN,logPREP
+    
+    return logBMADSP1,logKMEAN,logPREP
 
 
 
 
 
-f = open("C:\\Users\\Valentin\\Documents\\RTRK Diplomski\\RTRK Diplomski\\logovi\\LOWER_REZ\\BLOCK16\\EBMA_moving_block=16.log", "r")
+f = open("C:\\Users\\Valentin\\Documents\\RTRK Diplomski\\RTRK Diplomski\\logovi\\CODE_OPTI_1PROC\\MYBMA_dummy_block=32.log", "r")
 log = f.read().split('\n')
 f.close()
 wb = Workbook()
-sheet1 = wb.add_sheet("movingEBMA",cell_overwrite_ok=True)
+sheet1 = wb.add_sheet("dummyMYBMA",cell_overwrite_ok=True)
 sheet1.write(0,0, "BMA")
 sheet1.write(1,0, "Frame")
 sheet1.write(1,1, "A15 ms")
@@ -94,19 +90,14 @@ offset = 2
 
 
 broj_pon = {}                   #dictionary for storing execution time with its number of occurrence
-logBMAHOST,logBMADSP1,logBMADSP2,logKMEAN,logPREP = parse(log, broj_pon)
-for log in logBMAHOST:
-    
-    sheet1.write(offset+log[0],0, log[0])
-    sheet1.write(offset+log[0],1, log[1])
+logBMADSP1,logKMEAN,logPREP = parse(log, broj_pon)
+
 
 for log in logBMADSP1:
     sheet1.write(offset+log[0],0, log[0])
     sheet1.write(offset+log[0],2, log[1])
 
-for log in logBMADSP2:
-    sheet1.write(offset+log[0],0, log[0])
-    sheet1.write(offset+log[0],3, log[1])
+
 
 
 for log in logKMEAN:
@@ -116,7 +107,7 @@ for log in logKMEAN:
 for log in logPREP:
     sheet1.write(offset+log[0],6, log[1])
 
-wb.save("C:\\Users\\Valentin\\Documents\\RTRK Diplomski\\RTRK Diplomski\\logovi\\xls\\LOWRES\\BLOCK16\\movingEBMA.xls")
+wb.save("C:\\Users\\Valentin\\Documents\\RTRK Diplomski\\RTRK Diplomski\\logovi\\xls\\1PROCOPTI\\dummyMYBMA.xls")
     
 
     
