@@ -71,7 +71,6 @@ def parse (log, broj_pon):
 
 
 
-
 f = open("C:\\Users\\Valentin\\Documents\\RTRK Diplomski\\RTRK Diplomski\\logovi\\CODE_OPTI_1PROC\\MYBMA_dummy_block=32.log", "r")
 log = f.read().split('\n')
 f.close()

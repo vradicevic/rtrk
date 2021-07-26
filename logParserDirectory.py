@@ -3,6 +3,7 @@
 import numpy as np
 import xlwt
 from xlwt import Workbook
+import os
 
 def parseBMA(words, id):
     #word+1 = "]" 
@@ -69,54 +70,57 @@ def parse (log, broj_pon):
                         log = parseBMA(words,i+2)
                         logBMADSP2.append(log)
 
-    print(logBMAHOST)
+    
     return logBMAHOST,logBMADSP1,logBMADSP2,logKMEAN,logPREP
 
 
 
-
-
-f = open("D:\\logovi\\3PROC_OPTI\\ \\EBMA_moving_block=16.log", "r")
-log = f.read().split('\n')
-f.close()
+dirPath  = "D:\\logovi\\LOWER_REZ\\BLOCK16\\"
+file_list = os.listdir(dirPath)
 wb = Workbook()
-sheet1 = wb.add_sheet("movingEBMA",cell_overwrite_ok=True)
-sheet1.write(0,0, "BMA")
-sheet1.write(1,0, "Frame")
-sheet1.write(1,1, "A15 ms")
-sheet1.write(1,2, "DSP1 ms")
-sheet1.write(1,3, "DSP2 ms")
-sheet1.write(1,4, "KMEAN Vs")
-sheet1.write(1,5, "KMEAN ms")
-sheet1.write(1,6, "PREP Vs")
-offset = 2
+for file in file_list:
 
-
-
-broj_pon = {}                   #dictionary for storing execution time with its number of occurrence
-logBMAHOST,logBMADSP1,logBMADSP2,logKMEAN,logPREP = parse(log, broj_pon)
-for log in logBMAHOST:
+    f = open(dirPath+file, "r")
+    log = f.read().split('\n')
+    f.close()
     
-    sheet1.write(offset+log[0],0, log[0])
-    sheet1.write(offset+log[0],1, log[1])
+    sheet1 = wb.add_sheet(file[0:-13],cell_overwrite_ok=True)
+    sheet1.write(0,0, "BMA")
+    sheet1.write(1,0, "Frame")
+    sheet1.write(1,1, "A15 ms")
+    sheet1.write(1,2, "DSP1 ms")
+    sheet1.write(1,3, "DSP2 ms")
+    sheet1.write(1,4, "KMEAN Vs")
+    sheet1.write(1,5, "KMEAN ms")
+    sheet1.write(1,6, "PREP Vs")
+    offset = 2
 
-for log in logBMADSP1:
-    sheet1.write(offset+log[0],0, log[0])
-    sheet1.write(offset+log[0],2, log[1])
-
-for log in logBMADSP2:
-    sheet1.write(offset+log[0],0, log[0])
-    sheet1.write(offset+log[0],3, log[1])
 
 
-for log in logKMEAN:
-    sheet1.write(offset+log[0],4, log[2])
-    sheet1.write(offset+log[0],5, log[1])
+    broj_pon = {}                   #dictionary for storing execution time with its number of occurrence
+    logBMAHOST,logBMADSP1,logBMADSP2,logKMEAN,logPREP = parse(log, broj_pon)
+    for log in logBMAHOST:
+        
+        sheet1.write(offset+log[0],0, log[0])
+        sheet1.write(offset+log[0],1, log[1])
 
-for log in logPREP:
-    sheet1.write(offset+log[0],6, log[1])
+    for log in logBMADSP1:
+        sheet1.write(offset+log[0],0, log[0])
+        sheet1.write(offset+log[0],2, log[1])
 
-wb.save("C:\\Users\\Valentin\\Documents\\RTRK Diplomski\\RTRK Diplomski\\logovi\\xls\\LOWRES\\BLOCK16\\movingEBMA.xls")
+    for log in logBMADSP2:
+        sheet1.write(offset+log[0],0, log[0])
+        sheet1.write(offset+log[0],3, log[1])
+
+
+    for log in logKMEAN:
+        sheet1.write(offset+log[0],4, log[2])
+        sheet1.write(offset+log[0],5, log[1])
+
+    for log in logPREP:
+        sheet1.write(offset+log[0],6, log[1])
+
+wb.save(dirPath+"LOW_REZ_block=16.xls")
     
 
     
